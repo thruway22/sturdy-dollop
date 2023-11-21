@@ -11,7 +11,7 @@ st.title('test')
 # data = st.data_editor(df)
 
 options = {
-    'tvd': ['A', 'B'];
+    'tvd': ['A', 'B'],
     'hlt': ['A', 'B']
 }
 
