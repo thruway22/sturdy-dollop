@@ -123,5 +123,5 @@ raw_data = st.text_area(
 if raw_data:
     df = prep_data(raw_data)
     df = load_data(df)
-    st.plotly_chart(plot_data(df, simple_plot=simple_plot))
+    st.plotly_chart(plot_data(df, simple_plot=False))
     st.dataframe(df, height=600, use_container_width=True)
