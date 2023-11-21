@@ -3,9 +3,10 @@ import pandas as pd
 import well_profile as wp
 import utilities
 
-st.title('test')
+st.title('test2')
 
 data = st.text_area('data')
+
 
 df = process_df(create_df(data))
 st.write(df)
