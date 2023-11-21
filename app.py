@@ -14,8 +14,7 @@ def convert_to_csv(input_string):
     # Group every three values
     grouped_values = [values[i:i + 3] for i in range(0, len(values), 3)]
     df = pd.DataFrame(grouped_values, columns=['md', 'inc', 'azi'])
-    df.dropna(axis=1, how='all', inplace=True)
-    df.dropna(inplace=True)
+    df.dropna(axis=1, how='all', inplace=True).dropna(inplace=True)
     return df
 
 df = convert_to_csv(data)
