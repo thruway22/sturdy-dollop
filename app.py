@@ -11,6 +11,7 @@ st.title('test')
 # data = st.data_editor(df)
 
 data = st.text_area('data')
+tvd_true = st.toggle('TVD')
 
 def convert_to_csv(input_string):
     values = input_string.split()
@@ -19,10 +20,10 @@ def convert_to_csv(input_string):
     df = pd.DataFrame(grouped_values, columns=['md', 'inc', 'azi'])
     return df
 
-df = convert_to_csv(data)
-st.write(df)
+# df = convert_to_csv(data)
+# st.write(df)
 
-wp = wp.load(df)
-st.plotly_chart(wp.plot(style={'color': 'dls', 'size': 5}))
+# wp = wp.load(df)
+# st.plotly_chart(wp.plot(style={'color': 'dls', 'size': 5}))
 
 # wp.plot(style={'color': 'dls', 'size': 5}).show()
