@@ -86,7 +86,7 @@ def calc_rf(dogleg):
 
     return rf
 
-st.title('test6')
+st.title('test7')
 
 raw_data = st.text_area('data')
 
