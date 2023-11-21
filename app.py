@@ -66,8 +66,8 @@ def calc_tvd(tvd_prev, md1, md2, inc1, inc2, dogleg):
 def calc_rf(dogleg):
     return 1 if dogleg == 0 else tan(dogleg / 2) / (dogleg / 2)
 
-def plot_data(df, points):
-    if points:
+def plot_data(df, highlight_dls):
+    if highlight_dls:
         fig = go.Figure(
             data=[go.Scatter3d(
                 x=df['east'],
@@ -104,10 +104,8 @@ st.title('Dogleg Severity Plotter')
 raw_data = st.text_area(
     'data', placeholder='Paste date here', label_visibility='collapsed')
 
-points = st.toggle('Plot Simple Well Profile', value=True)
-
 if raw_data:
     df = prep_data(raw_data)
     df = load_data(df)
-    st.plotly_chart(plot_data(df, points=points))
+    st.plotly_chart(plot_data(df, highlight_dls=True))
     st.dataframe(df, height=600, use_container_width=True)
