@@ -5,7 +5,7 @@ import plotly.express as px
 import plotly.graph_objects as go
 
 st.set_page_config(page_title='DLS Plotter')
-st.write(15)
+st.write(16)
 
 def prep_data(string):
     values = string.split()
