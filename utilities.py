@@ -1,5 +1,6 @@
 import pandas as pd
 from io import StringIO
+from math import degrees
 
 import plotly.express as px
 import plotly.graph_objects as go
@@ -12,8 +13,8 @@ def prep_data(string):
     df.dropna(inplace=True)
     return df
 
-def load_data(data, set_start=None):
-    trajectory = [{'md': 0, 'inc': 0, 'azi': 0, 'dl': 0, 'tvd': 0, 'north': initial_point['north'], 'east': initial_point['east']}]
+def load_data(data):
+    trajectory = [{'md': 0, 'inc': 0, 'azi': 0, 'dl': 0, 'tvd': 0, 'north': 0, 'east': 0}]
 
     for idx, row in data.iterrows():
         if row['md'] > 0:
@@ -30,3 +31,16 @@ def load_data(data, set_start=None):
             trajectory.append(new_point)
 
     return pd.DataFrame(trajectory[1:])  # Skip the initial dummy point
+
+def calc_dogleg(inc1, inc2, azi1, azi2):
+    if inc1 == inc2 and azi1 == azi2:
+        dl = 0
+    else:
+        inner_value = cos(radians(inc1)) * cos(radians(inc2)) + sin(radians(inc1)) * sin(radians(inc2)) * \
+            cos(radians(azi2 - azi1))
+        if inner_value > 1:
+            inner_value = 1
+        if inner_value < -1:
+            inner_value = -1
+        dl = acos(inner_value)
+    return dl
