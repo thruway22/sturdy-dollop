@@ -5,14 +5,6 @@ import plotly.express as px
 import plotly.graph_objects as go
 
 st.set_page_config(page_title='DLS Plotter')
-st.markdown(
-    '''
-    <style>
-        footer {visibility: hidden;}
-    </style>
-    ''',
-    unsafe_allow_html=True
-)
 
 def prep_data(string):
     values = string.split()
