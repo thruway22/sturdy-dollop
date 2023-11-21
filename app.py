@@ -8,7 +8,7 @@ st.title('test2')
 raw_data = st.text_area('data')
 
 df = utl.prep_data(raw_data)
-
+df = utl.load_data(df)
 st.write(df)
 
 
