@@ -131,9 +131,9 @@ def plot_wellpath(df, highlight_dl=False):
     
 
     fig.update_layout(scene=dict(
-        xaxis_title='East, m',
-        yaxis_title='North, m',
-        zaxis_title='TVD, m',
+        xaxis_title='East, ft',
+        yaxis_title='North, ft',
+        zaxis_title='TVD, ft',
         aspectmode='manual'),
         title=title)
     
