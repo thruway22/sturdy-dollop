@@ -8,3 +8,5 @@ st.title('test')
 
 data = st.text_area('data')
 
+st.write(data)
+
