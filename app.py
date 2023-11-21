@@ -29,7 +29,7 @@ def load_data(data):
                 'east': compute_east(trajectory[-1]['east'], trajectory[-1]['md'], row['md'], trajectory[-1]['inc'], row['inc'], trajectory[-1]['azi'], row['azi'], beta),
                 'tvd': compute_tvd(trajectory[-1]['tvd'], trajectory[-1]['md'], row['md'], trajectory[-1]['inc'], row['inc'], beta),
                 # 'dls': degrees(beta)
-                'dls': (degrees(beta)/row['md']) * 100
+                'dls': compute_dls(trajectory[-1]['md'], row['md'], beta)
             }
             trajectory.append(new_point)
     return pd.DataFrame(trajectory[1:])
@@ -65,6 +65,11 @@ def compute_rf(beta):
         return 1
     else:
         return (2 / beta) * tan(beta / 2)
+
+def compute_dls(md1, md2, beta):
+    delta_md = md2 - md1
+    dls = (degrees(beta) / delta_md) * 100
+    return dls
 
 def plot_data(df, highlight_dls):
     if highlight_dls:
