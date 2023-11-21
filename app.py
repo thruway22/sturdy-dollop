@@ -10,7 +10,7 @@ st.title('test')
 # df = pd.DataFrame([[0, 0, 0]], columns=["md", "inc", "azi"])
 # data = st.data_editor(df)
 
-tvd = st.selectbox('TVD', ['True', 'False'], label_visibility='collapsed')
+tvd = st.selectbox('TVD', ['My data has TVD column', 'Inffer TVD'], label_visibility='collapsed')
 highlight = st.selectbox('Color', ['A', 'B', 'C'])
 data = st.text_area('data')
 tvd_true = st.toggle('TVD')
