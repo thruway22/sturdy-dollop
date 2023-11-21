@@ -117,7 +117,7 @@ def plot_wellpath(df, highlight_dl=False):
                     color=df['dl'],  # Color by dogleg severity
                     colorscale='amp',
                     showscale=True,
-                    opacity=0.8),
+                    opacity=1.0),
                 hovertemplate='<b>North</b>: %{y:.2f}<br>' +
                               '<b>East</b>: %{x}<br>' +
                               '<b>TVD</b>: %{z}<br>' +
@@ -144,7 +144,7 @@ def plot_wellpath(df, highlight_dl=False):
 
 
 st.title('test')
-st.write(11)
+st.write(12)
 
 raw_data = st.text_area('data')
 
