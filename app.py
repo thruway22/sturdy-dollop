@@ -1,4 +1,4 @@
-import utilities
+import utilities as utl
 import streamlit as st
 import pandas as pd
 import well_profile as wp
@@ -8,7 +8,7 @@ st.title('test2')
 data = st.text_area('data')
 
 
-df = prep_df(create_df(data))
+df = utl.prep_df(create_df(data))
 st.write(df)
 
 
