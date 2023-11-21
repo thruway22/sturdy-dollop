@@ -49,8 +49,44 @@ def calc_dogleg(inc1, inc2, azi1, azi2):
         dl = acos(inner_value)
     return dl
 
+def calc_north(north_prev, md1, md2, inc1, inc2, azi1, azi2, dogleg):
+    rf = calc_rf(dogleg)
+    delta_md = md2 - md1
+    north_delta = 0.5 * delta_md * (sin(radians(inc1)) * cos(radians(azi1))
+                                    + sin(radians(inc2)) * cos(radians(azi2))) * rf
+    north_new = north_prev + north_delta
 
-st.title('test5')
+    return north_new
+
+
+def calc_east(east_prev, md1, md2, inc1, inc2, azi1, azi2, dogleg):
+    rf = calc_rf(dogleg)
+    delta_md = md2 - md1
+    east_delta = 0.5 * delta_md * (sin(radians(inc1)) * sin(radians(azi1))
+                                   + sin(radians(inc2)) * sin(radians(azi2))) * rf
+    east_new = east_prev + east_delta
+
+    return east_new
+
+
+def calc_tvd(tvd_prev, md1, md2, inc1, inc2, dogleg):
+    rf = calc_rf(dogleg)
+    delta_md = md2 - md1
+    tvd_delta = 0.5 * delta_md * (cos(radians(inc1)) + cos(radians(inc2))) * rf
+    tvd_new = tvd_prev + tvd_delta
+
+    return tvd_new
+
+
+def calc_rf(dogleg):
+    if dogleg == 0:
+        rf = 1
+    else:
+        rf = tan(dogleg / 2) / (dogleg / 2)
+
+    return rf
+
+st.title('test6')
 
 raw_data = st.text_area('data')
 
