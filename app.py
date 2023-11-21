@@ -68,6 +68,12 @@ def calc_rf(dogleg):
 
 def plot_data(df, highlight_dls):
     if highlight_dls:
+        custom_colorscale = [
+        [0.0, 'rgb(255,255,255)'],  # white
+        [0.5, 'rgb(255,150,150)'],  # light red
+        [1.0, 'rgb(255,0,0)']       # red
+        ]
+
         fig = go.Figure(
             data=[go.Scatter3d(
                 x=df['east'],
@@ -77,7 +83,7 @@ def plot_data(df, highlight_dls):
                 marker=dict(
                     size=5,
                     color=df['dls'],  # Color by dogleg severity
-                    colorscale='matter',
+                    colorscale=custom_colorscale,
                     showscale=True,
                     opacity=1.0),
                 hovertemplate='<b>MD</b>: %{customdata[0]:.2f}<br>' +
