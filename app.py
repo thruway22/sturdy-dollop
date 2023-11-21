@@ -4,6 +4,7 @@ import well_profile as wp
 from io import StringIO
 from math import degrees, radians, cos, sin, acos, tan
 import plotly.express as px
+import plotly.graph_objects as go
 
 def prep_data(string):
     values = string.split()
@@ -84,15 +85,55 @@ def calc_rf(dogleg):
 
     return rf
 
-def plot_wellpath(df):
-    fig = px.line_3d(df, x="east", y="north", z="tvd", color_discrete_sequence=['blue'])
+# def plot_wellpath(df):
+#     fig = px.line_3d(df, x="east", y="north", z="tvd", color_discrete_sequence=['blue'])
+
+#     fig.update_layout(scene=dict(
+#         xaxis_title='East, m',
+#         yaxis_title='North, m',
+#         zaxis_title='TVD, m',
+#         aspectmode='manual'),
+#         title='Wellbore Trajectory - 3D View')
+    
+#     fig.update_scenes(zaxis_autorange="reversed")
+
+#     return fig
+
+import pandas as pd
+import plotly.express as px
+import plotly.graph_objects as go
+
+def plot_wellpath(df, highlight_dl=False):
+    if highlight_dl:
+        # Plot highlighting 'dl'
+        fig = go.Figure(
+            data=[go.Scatter3d(
+                x=df['east'],
+                y=df['north'],
+                z=df['tvd'],
+                mode='markers',
+                marker=dict(
+                    size=2,
+                    color=df['dl'],  # Color by dogleg severity
+                    showscale=True,
+                    opacity=0.8),
+                hovertemplate='<b>North</b>: %{y:.2f}<br>' +
+                              '<b>East</b>: %{x}<br>' +
+                              '<b>TVD</b>: %{z}<br>' +
+                              '<b>DL</b>: %{marker.color:.2f}<extra></extra>')
+            ])
+        title = 'Wellbore Trajectory - 3D View with DL Highlighting'
+    else:
+        # Simple plot
+        fig = px.line_3d(df, x="east", y="north", z="tvd", color_discrete_sequence=['blue'])
+        title = 'Wellbore Trajectory - 3D View'
 
     fig.update_layout(scene=dict(
         xaxis_title='East, m',
         yaxis_title='North, m',
         zaxis_title='TVD, m',
         aspectmode='manual'),
-        title='Wellbore Trajectory - 3D View')
+        title=title)
     
     fig.update_scenes(zaxis_autorange="reversed")
 
@@ -100,7 +141,7 @@ def plot_wellpath(df):
 
 
 st.title('test')
-st.write(8)
+st.write(9)
 
 raw_data = st.text_area('data')
 
