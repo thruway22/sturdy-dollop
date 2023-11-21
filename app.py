@@ -5,7 +5,7 @@ import plotly.express as px
 import plotly.graph_objects as go
 
 st.set_page_config(page_title='DLS Plotter')
-st.write(14)
+st.write(15)
 
 def prep_data(string):
     values = string.split()
@@ -17,11 +17,10 @@ def prep_data(string):
     return df
 
 def load_data(data):
-    trajectory = [{'md': 0, 'inc': 0, 'azi': 0, 'dls': 0, 'dls_test': 0, 'tvd': 0, 'north': 0, 'east': 0}]
+    trajectory = [{'md': 0, 'inc': 0, 'azi': 0, 'dls': 0, 'tvd': 0, 'north': 0, 'east': 0}]
     for idx, row in data.iterrows():
         if row['md'] > 0:
-            beta = compute_beta(row['inc'], trajectory[-1]['inc'], row['azi'], trajectory[-1]['azi'])
-            dls_test_value = compute_dls_test(trajectory[-1]['inc'], row['inc'], trajectory[-1]['azi'], row['azi'], row['md'])
+            beta = compute_beta(trajectory[-1]['inc'], row['inc'], trajectory[-1]['azi'], row['azi'])
             new_point = {
                 'md': row['md'], 
                 'inc': row['inc'], 
@@ -29,8 +28,7 @@ def load_data(data):
                 'north': compute_north(trajectory[-1]['north'], trajectory[-1]['md'], row['md'], trajectory[-1]['inc'], row['inc'], trajectory[-1]['azi'], row['azi'], beta),
                 'east': compute_east(trajectory[-1]['east'], trajectory[-1]['md'], row['md'], trajectory[-1]['inc'], row['inc'], trajectory[-1]['azi'], row['azi'], beta),
                 'tvd': compute_tvd(trajectory[-1]['tvd'], trajectory[-1]['md'], row['md'], trajectory[-1]['inc'], row['inc'], beta),
-                'dls': degrees(beta),  # Convert beta from radians to degrees for dls
-                'dls_test': dls_test_value  # Add the new DLS test value
+                'dls': degrees(beta)
             }
             trajectory.append(new_point)
     return pd.DataFrame(trajectory[1:])
@@ -66,17 +64,6 @@ def compute_rf(beta):
         return 1
     else:
         return (2 / beta) * tan(beta / 2)
-
-def compute_dls_test(inc1, inc2, azi1, azi2, md):
-    if md == 0:  # Avoid division by zero
-        return None
-    inc1 = radians(inc1)
-    inc2 = radians(inc2)
-    azi1 = radians(azi1)
-    azi2 = radians(azi2)
-    # Compute the DLS test value using the provided equation
-    dls_test = (100 / md) * acos(sin(inc1) * sin(inc2) * cos(azi1 - azi2) + cos(inc1) * cos(inc2))
-    return degrees(dls_test)  # Convert the result to degrees
 
 def plot_data(df, highlight_dls):
     if highlight_dls:
