@@ -99,7 +99,8 @@ def plot_wellpath(df):
     return fig
 
 
-st.title('test8')
+st.title('test')
+st.write(8)
 
 raw_data = st.text_area('data')
 
