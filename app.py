@@ -136,6 +136,7 @@ def plot_wellpath(df, highlight_dl=False):
         title=title)
     
     fig.update_scenes(zaxis_autorange="reversed")
+    fig.layout.template = style['darkMode']
 
     return fig
 
