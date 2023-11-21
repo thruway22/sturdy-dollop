@@ -10,9 +10,10 @@ st.title('test')
 # df = pd.DataFrame([[0, 0, 0]], columns=["md", "inc", "azi"])
 # data = st.data_editor(df)
 
+highlight = st.selectbox('Color', ['A', 'B', 'C'])
 data = st.text_area('data')
 tvd_true = st.toggle('TVD')
-highlight = st.selectbox('Color', ['A', 'B', 'C'])
+
 
 def convert_to_csv(input_string):
     values = input_string.split()
