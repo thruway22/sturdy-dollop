@@ -46,16 +46,14 @@ def calculate_new_point(last_point, current_point, dogleg):
         'azi': current_point['azi'],
         'north': last_point['north'] + calculate_delta(delta_md, last_point['inc'], current_point['inc'], last_point['azi'], current_point['azi'], rf, 'north'),
         'east': last_point['east'] + calculate_delta(delta_md, last_point['inc'], current_point['inc'], last_point['azi'], current_point['azi'], rf, 'east'),
-        'tvd': last_point['tvd'] + calculate_delta(delta_md, last_point['inc'], current_point['inc'], rf, axis='tvd'),
+        'tvd': last_point['tvd'] + calculate_delta(delta_md, last_point['inc'], current_point['inc'], rf=rf, axis='tvd'),
         'dls': degrees(dogleg)
     }
 
 def calculate_delta(delta_md, inc1, inc2, azi1=None, azi2=None, rf=None, axis='north'):
     # Helper function to calculate north, east, and tvd delta
-    if axis == 'north':
+    if axis == 'north' or axis == 'east':
         return 0.5 * delta_md * (sin(radians(inc1)) * cos(radians(azi1)) + sin(radians(inc2)) * cos(radians(azi2))) * rf
-    elif axis == 'east':
-        return 0.5 * delta_md * (sin(radians(inc1)) * sin(radians(azi1)) + sin(radians(inc2)) * sin(radians(azi2))) * rf
     elif axis == 'tvd':
         return 0.5 * delta_md * (cos(radians(inc1)) + cos(radians(inc2))) * rf
 
