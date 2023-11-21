@@ -150,4 +150,4 @@ if raw_data:
     df = load_data(df)
     st.write(df)
 
-    st.plotly_chart(plot_wellpath(df, true))
+    st.plotly_chart(plot_wellpath(df, True))
