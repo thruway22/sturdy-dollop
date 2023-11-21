@@ -12,17 +12,6 @@ st.title('test')
 
 data = st.text_area('data')
 
-
-def plot(well):
-    units = well.info['units']
-
-    well1 = pd.DataFrame(well.trajectory)
-    well1["well"] = 1
-    result = well1
-
-    color = 'well'
-    fig = px.line_3d(result, x="east", y="north", z="tvd", color=color)
-
 def convert_to_csv(input_string):
     values = input_string.split()
     # Group every three values
@@ -34,6 +23,6 @@ df = convert_to_csv(data)
 st.write(df)
 
 wp = wp.load(df)
-st.plotly_chart(wp.plot())
+st.plotly_chart(wp.plot(style={'color': 'dls', 'size': 5}))
 
 # wp.plot(style={'color': 'dls', 'size': 5}).show()
