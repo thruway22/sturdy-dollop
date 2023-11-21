@@ -23,4 +23,4 @@ st.write(df)
 
 wp = wp.load(df)
 
-wp.plot(style={'color': 'dls', 'size': 5}).show()
+st.plotly_chart(wp.plot(style={'color': 'dls', 'size': 5}).show())
