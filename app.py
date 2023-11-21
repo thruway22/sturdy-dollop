@@ -141,7 +141,7 @@ def plot_wellpath(df, highlight_dl=False):
 
 
 st.title('test')
-st.write(9)
+st.write(10)
 
 raw_data = st.text_area('data')
 
@@ -150,4 +150,4 @@ if raw_data:
     df = load_data(df)
     st.write(df)
 
-    st.plotly_chart(plot_wellpath(df))
+    st.plotly_chart(plot_wellpath(df, true))
