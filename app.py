@@ -17,7 +17,9 @@ def convert_to_csv(input_string):
     df = pd.DataFrame(grouped_values, columns=['a', 'b', 'c'])
     return df
 
-st.write(convert_to_csv(data))
+df = convert_to_csv(data)
+
+st.write(df)
 
 wp = wp.load(df)
 
