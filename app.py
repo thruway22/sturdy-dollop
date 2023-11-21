@@ -12,16 +12,10 @@ data = st.text_area('data')
 
 def convert_to_csv(input_string):
     values = input_string.split()
-
     # Group every three values
     grouped_values = [values[i:i + 3] for i in range(0, len(values), 3)]
-
-    # Create a DataFrame from the grouped values
     df = pd.DataFrame(grouped_values, columns=['a', 'b', 'c'])
-
-    # # Export DataFrame to CSV file
-    # df.to_csv('output.csv', index=False)
-
+    return df
 
 st.write(convert_to_csv(data))
 
