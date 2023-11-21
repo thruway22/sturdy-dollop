@@ -123,7 +123,7 @@ def plot_data(df, highlight_dl=False):
     return fig
 
 st.title('Well Profile')
-st.write(16)
+st.write(17)
 
 raw_data = st.text_area(
     'data', placeholder='Paste date here', label_visibility='collapsed')
@@ -133,6 +133,6 @@ if raw_data:
     df = load_data(df)
     st.plotly_chart(plot_data(df, True))
 
-    st.dataframe(df, use_container_width=True)
+    st.dataframe(df, height=10, use_container_width=True)
 
     
