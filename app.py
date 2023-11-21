@@ -1,6 +1,7 @@
 import streamlit as st
 import pandas as pd
 from math import degrees, radians, cos, sin, acos, tan
+import plotly.express as px
 import plotly.graph_objects as go
 
 def prep_data(string):
@@ -65,31 +66,38 @@ def calc_tvd(tvd_prev, md1, md2, inc1, inc2, dogleg):
 def calc_rf(dogleg):
     return 1 if dogleg == 0 else tan(dogleg / 2) / (dogleg / 2)
 
-def plot_data(df):
-    fig = go.Figure(
-        data=[go.Scatter3d(
-            x=df['east'],
-            y=df['north'],
-            z=df['tvd'],
-            mode='markers',
-            marker=dict(
-                size=5,
-                color=df['dls'],  # Color by dogleg severity
-                colorscale='matter',
-                showscale=True,
-                opacity=1.0),
-            hovertemplate='<b>North</b>: %{y:.2f}<br>' +
-                          '<b>East</b>: %{x}<br>' +
-                          '<b>TVD</b>: %{z}<br>' +
-                          '<b>DLS</b>: %{marker.color:.2f}<extra></extra>')
-        ])
+def plot_data(df, points=True):
+    if points:
+        fig = go.Figure(
+            data=[go.Scatter3d(
+                x=df['east'],
+                y=df['north'],
+                z=df['tvd'],
+                mode='markers',
+                marker=dict(
+                    size=5,
+                    color=df['dls'],  # Color by dogleg severity
+                    colorscale='matter',
+                    showscale=True,
+                    opacity=1.0),
+                hovertemplate='<b>North</b>: %{y:.2f}<br>' +
+                              '<b>East</b>: %{x}<br>' +
+                              '<b>TVD</b>: %{z}<br>' +
+                              '<b>DLS</b>: %{marker.color:.2f}<extra></extra>')
+            ])
+    else:
+        fig = px.line_3d(df, x='east', y='north', z='tvd', color_discrete_sequence=['blue'])
+
     fig.update_layout(scene=dict(
         xaxis_title='East, ft',
         yaxis_title='North, ft',
         zaxis_title='TVD, ft',
         aspectmode='manual'),
+        title=title,
         height=750)
+    
     fig.update_scenes(zaxis_autorange='reversed')
+
     return fig
 
 st.title('Dogleg Severity Plotter')
@@ -97,10 +105,10 @@ st.title('Dogleg Severity Plotter')
 raw_data = st.text_area(
     'data', placeholder='Paste date here', label_visibility='collapsed')
 
-st.toggle('Plot Simple Well Profile')
+points = st.toggle('Plot Simple Well Profile')
 
 if raw_data:
     df = prep_data(raw_data)
     df = load_data(df)
-    st.plotly_chart(plot_data(df))
+    st.plotly_chart(plot_data(df, points=points))
     st.dataframe(df, height=600, use_container_width=True)
