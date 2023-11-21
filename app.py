@@ -19,16 +19,7 @@ def convert_to_csv(input_string):
 
 st.write(convert_to_csv(data))
 
+wp = wp.load(df)
 
-# def input_to_csv(input_string):
-#     # Convert string to StringIO object (which behaves like a file object)
-#     string_io = StringIO(input_string)
 
-#     # Read the string as a CSV into a DataFrame
-#     df = pd.read_csv(string_io, sep=",")
-
-#     # Export DataFrame to CSV file
-#     df.to_csv("output.csv", index=False)
-
-# st.write(data)
-
+# wp.plot(style={'color': 'dls', 'size': 5}).show()
