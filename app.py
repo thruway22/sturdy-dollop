@@ -34,6 +34,6 @@ df = convert_to_csv(data)
 st.write(df)
 
 wp = wp.load(df)
-st.plotly_chart(wp.load(df).plot())
+st.plotly_chart(wp.plot())
 
 # wp.plot(style={'color': 'dls', 'size': 5}).show()
