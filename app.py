@@ -69,8 +69,10 @@ def compute_dls(md1, md2, beta):
     dls = (degrees(beta) / delta_md) * 100
     return dls
 
-def plot_data(df, highlight_dls):
-    if highlight_dls:
+def plot_data(df, simple_plot):
+    if simple_plot:
+        fig = px.line_3d(df, x='east', y='north', z='tvd', color_discrete_sequence=['blue'])
+    else:
         custom_colorscale = [
             [0.0, 'rgba(220,218,218,255)'],
             [0.5, 'rgba(245,181,136,255)'],
@@ -98,8 +100,7 @@ def plot_data(df, highlight_dls):
                               '<b>DLS</b>: %{marker.color:.2f}<extra></extra>',
                 customdata=df[['md', 'inc', 'azi']])
             ])
-    else:
-        fig = px.line_3d(df, x='east', y='north', z='tvd', color_discrete_sequence=['blue'])
+        
 
     fig.update_layout(scene=dict(
         xaxis_title='East, ft',
@@ -117,10 +118,10 @@ st.title('DLS Plotter')
 raw_data = st.text_area(
     'data', placeholder='Paste date here', label_visibility='collapsed')
 
-highlight_dls = st.toggle('Plot simple continuous wellpath', value=False)
+simple_plot = st.toggle('Plot simple continuous wellpath', value=False)
 
 if raw_data:
     df = prep_data(raw_data)
     df = load_data(df)
-    st.plotly_chart(plot_data(df, highlight_dls=highlight_dls))
+    st.plotly_chart(plot_data(df, simple_plot=simple_plot))
     st.dataframe(df, height=600, use_container_width=True)
