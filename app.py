@@ -2,7 +2,7 @@ import streamlit as st
 import pandas as pd
 import well_profile as wp
 from io import StringIO
-from math import degrees
+from math import degrees, radians, cos, sin, acos
 
 import plotly.express as px
 import plotly.graph_objects as go
@@ -11,6 +11,7 @@ def prep_data(string):
     values = string.split()
     grouped_values = [values[i:i + 3] for i in range(0, len(values), 3)]
     df = pd.DataFrame(grouped_values, columns=['md', 'inc', 'azi'])
+    df[['md', 'inc', 'azi']] = df[['md', 'inc', 'azi']].apply(pd.to_numeric)
     df.dropna(axis=1, how='all', inplace=True)
     df.dropna(inplace=True)
     return df
@@ -48,10 +49,11 @@ def calc_dogleg(inc1, inc2, azi1, azi2):
     return dl
 
 
-st.title('test3')
+st.title('test4')
 
 raw_data = st.text_area('data')
 
-df = prep_data(raw_data)
-df = load_data(df)
-st.write(df)
+if raw_data:
+    df = prep_data(raw_data)
+    df = load_data(df)
+    st.write(df)
