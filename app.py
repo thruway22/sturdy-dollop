@@ -4,6 +4,9 @@ from math import degrees, radians, cos, sin, acos, tan
 import plotly.express as px
 import plotly.graph_objects as go
 
+st.set_page_config(page_title='DLS Plotter')
+st.markdown('<style>#MainMenu {visibility: hidden;}</style>', unsafe_allow_html=True)
+
 def prep_data(string):
     values = string.split()
     grouped_values = [values[i:i + 3] for i in range(0, len(values), 3)]
@@ -109,7 +112,7 @@ def plot_data(df, highlight_dls):
 
     return fig
 
-st.title('Dogleg Severity Plotter')
+st.title('DLS Plotter')
 
 raw_data = st.text_area(
     'data', placeholder='Paste date here', label_visibility='collapsed')
