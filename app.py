@@ -121,8 +121,7 @@ def plot_data(df, highlight_dl=False):
 
     return fig
 
-st.title('Well Profile')
-st.write(22)
+st.title('Dogleg Severity Plotter')
 
 raw_data = st.text_area(
     'data', placeholder='Paste date here', label_visibility='collapsed')
@@ -134,4 +133,4 @@ if raw_data:
 
     st.dataframe(df, height=600, use_container_width=True)
 
-    
+st.write(11)
