@@ -2,6 +2,8 @@ import streamlit as st
 import pandas as pd
 from io import StringIO
 import well_profile as wp
+import plotly.express as px
+import plotly.graph_objects as go
 
 st.title('test')
 
@@ -9,6 +11,19 @@ st.title('test')
 # data = st.data_editor(df)
 
 data = st.text_area('data')
+
+
+def plot(well):
+    units = well.info['units']
+
+    well1 = pd.DataFrame(well.trajectory)
+    well1["well"] = 1
+    result = well1
+
+    color = 'well'
+    fig = px.line_3d(result, x="east", y="north", z="tvd", color=color)
+
+
 
 def convert_to_csv(input_string):
     values = input_string.split()
@@ -23,4 +38,6 @@ st.write(df)
 
 wp = wp.load(df)
 
-st.write(wp.plot(style={'color': 'dls', 'size': 5}).show())
+st.plotly_chart(wp.load(df).plot())
+
+# wp.plot(style={'color': 'dls', 'size': 5}).show()
