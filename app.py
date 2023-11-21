@@ -1,14 +1,13 @@
-import utilities as utl
+import utilities as u
 import streamlit as st
 import pandas as pd
 import well_profile as wp
 
 st.title('test2')
 
-data = st.text_area('data')
+raw_data = st.text_area('data')
 
-
-df = utl.prep_df(utl.create_df(data))
+df = utl.prep_data(raw_data)
 st.write(df)
 
 
