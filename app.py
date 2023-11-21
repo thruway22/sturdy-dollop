@@ -2,7 +2,7 @@ import streamlit as st
 import pandas as pd
 import well_profile as wp
 from io import StringIO
-from math import degrees, radians, cos, sin, acos
+from math import degrees, radians, cos, sin, acos, tan
 
 import plotly.express as px
 import plotly.graph_objects as go
