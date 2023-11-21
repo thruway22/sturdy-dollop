@@ -116,14 +116,15 @@ def plot_data(df, highlight_dl=False):
         yaxis_title='North, ft',
         zaxis_title='TVD, ft',
         aspectmode='manual'),
-        title=title)
+        title=title,
+        height=2000)
     
     fig.update_scenes(zaxis_autorange="reversed")
 
     return fig
 
 st.title('Well Profile')
-st.write(20)
+st.write(21)
 
 raw_data = st.text_area(
     'data', placeholder='Paste date here', label_visibility='collapsed')
@@ -131,7 +132,7 @@ raw_data = st.text_area(
 if raw_data:
     df = prep_data(raw_data)
     df = load_data(df)
-    st.plotly_chart(plot_data(df, True), height=2000)
+    st.plotly_chart(plot_data(df, True))
 
     st.dataframe(df, height=600, use_container_width=True)
 
