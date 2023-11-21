@@ -118,7 +118,7 @@ st.title('DLS Plotter')
 raw_data = st.text_area(
     'data', placeholder='Paste date here', label_visibility='collapsed')
 
-simple_plot = st.toggle('Plot simple continuous wellpath', value=False)
+# simple_plot = st.toggle('Plot simple continuous wellpath', value=False)
 
 if raw_data:
     df = prep_data(raw_data)
