@@ -133,6 +133,6 @@ if raw_data:
     df = load_data(df)
     st.plotly_chart(plot_data(df, True))
 
-    st.dataframe(df, height=100, use_container_width=True)
+    st.dataframe(df, height=600, use_container_width=True)
 
     
