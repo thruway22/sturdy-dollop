@@ -12,6 +12,7 @@ st.title('test')
 
 data = st.text_area('data')
 tvd_true = st.toggle('TVD')
+highlight = st.selectbox('Color', ['A', 'B', 'C'])
 
 def convert_to_csv(input_string):
     values = input_string.split()
