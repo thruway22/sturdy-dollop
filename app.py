@@ -85,25 +85,7 @@ def calc_rf(dogleg):
 
     return rf
 
-# def plot_wellpath(df):
-#     fig = px.line_3d(df, x="east", y="north", z="tvd", color_discrete_sequence=['blue'])
-
-#     fig.update_layout(scene=dict(
-#         xaxis_title='East, m',
-#         yaxis_title='North, m',
-#         zaxis_title='TVD, m',
-#         aspectmode='manual'),
-#         title='Wellbore Trajectory - 3D View')
-    
-#     fig.update_scenes(zaxis_autorange="reversed")
-
-#     return fig
-
-import pandas as pd
-import plotly.express as px
-import plotly.graph_objects as go
-
-def plot_wellpath(df, highlight_dl=False):
+def plot_data(df, highlight_dl=False):
     if highlight_dl:
         # Plot highlighting 'dl'
         fig = go.Figure(
@@ -129,8 +111,6 @@ def plot_wellpath(df, highlight_dl=False):
         fig = px.line_3d(df, x="east", y="north", z="tvd", color_discrete_sequence=['blue'])
         title = 'Wellbore Trajectory - 3D View'
 
-    
-
     fig.update_layout(scene=dict(
         xaxis_title='East, ft',
         yaxis_title='North, ft',
@@ -142,15 +122,18 @@ def plot_wellpath(df, highlight_dl=False):
 
     return fig
 
+st.title('Well Profile')
+st.write(15)
 
-st.title('test')
-st.write(14)
-
-raw_data = st.text_area('data')
+raw_data = st.text_area(
+    'data', placeholder='Paste date here', label_visibility='collapsed')
 
 if raw_data:
     df = prep_data(raw_data)
     df = load_data(df)
-    st.write(df)
+    st.plotly_chart(plot_data(df, True))
 
-    st.plotly_chart(plot_wellpath(df, True))
+    with st.expander("See raw data"):
+        st.dataframe(df, use_container_width=False)
+
+    
