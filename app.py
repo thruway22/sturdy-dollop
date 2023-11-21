@@ -84,7 +84,7 @@ def plot_data(df, simple_plot):
                 x=df['east'],
                 y=df['north'],
                 z=df['tvd'],
-                mode='markers',
+                mode='lines+markers',
                 marker=dict(
                     size=5,
                     color=df['dls'],  # Color by dogleg severity
