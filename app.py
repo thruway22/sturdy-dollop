@@ -1,7 +1,7 @@
+import utilities
 import streamlit as st
 import pandas as pd
 import well_profile as wp
-import utilities
 
 st.title('test2')
 
