@@ -3,9 +3,7 @@ import pandas as pd
 import well_profile as wp
 from io import StringIO
 from math import degrees, radians, cos, sin, acos, tan
-
 import plotly.express as px
-import plotly.graph_objects as go
 
 def prep_data(string):
     values = string.split()
@@ -86,7 +84,22 @@ def calc_rf(dogleg):
 
     return rf
 
-st.title('test7')
+def plot_wellpath(df):
+    fig = px.line_3d(df, x="east", y="north", z="tvd", color_discrete_sequence=['blue'])
+
+    fig.update_layout(scene=dict(
+        xaxis_title='East, m',
+        yaxis_title='North, m',
+        zaxis_title='TVD, m',
+        aspectmode='manual'),
+        title='Wellbore Trajectory - 3D View')
+    
+    fig.update_scenes(zaxis_autorange="reversed")
+
+    return fig
+
+
+st.title('test8')
 
 raw_data = st.text_area('data')
 
@@ -94,3 +107,5 @@ if raw_data:
     df = prep_data(raw_data)
     df = load_data(df)
     st.write(df)
+
+    st.plotly_chart(plot_wellpath(df))
