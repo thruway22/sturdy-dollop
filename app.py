@@ -105,11 +105,9 @@ def plot_data(df, highlight_dl=False):
                               '<b>TVD</b>: %{z}<br>' +
                               '<b>DL</b>: %{marker.color:.2f}<extra></extra>')
             ])
-        title = 'Wellbore Trajectory - 3D View with DL Highlighting'
     else:
         # Simple plot
         fig = px.line_3d(df, x="east", y="north", z="tvd", color_discrete_sequence=['blue'])
-        title = 'Wellbore Trajectory - 3D View'
 
     fig.update_layout(scene=dict(
         xaxis_title='East, ft',
@@ -132,7 +130,7 @@ raw_data = st.text_area(
 if raw_data:
     df = prep_data(raw_data)
     df = load_data(df)
-    st.plotly_chart(plot_data(df, True))
+    st.plotly_chart(plot_data(df, False))
 
     st.dataframe(df, height=600, use_container_width=True)
 
