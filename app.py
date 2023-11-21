@@ -17,7 +17,7 @@ st.markdown(
     """,
     unsafe_allow_html=True
 )
-st.markdown('<style>#MainMenu {visibility: hidden;}</style>', unsafe_allow_html=True)
+st.markdown('<style>#MainMenu {visibility: hidden;} footer {visibility: hidden;}</style>', unsafe_allow_html=True)
 
 def prep_data(string):
     values = string.split()
