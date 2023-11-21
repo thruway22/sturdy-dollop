@@ -117,8 +117,10 @@ st.title('DLS Plotter')
 raw_data = st.text_area(
     'data', placeholder='Paste date here', label_visibility='collapsed')
 
+highlight_dls = st.toggle('Plot simple continuous wellpath', value=False)
+
 if raw_data:
     df = prep_data(raw_data)
     df = load_data(df)
-    st.plotly_chart(plot_data(df, highlight_dls=True))
+    st.plotly_chart(plot_data(df, highlight_dls=highlight_dls))
     st.dataframe(df, height=600, use_container_width=True)
