@@ -117,7 +117,7 @@ def plot_data(df, highlight_dl=False):
         zaxis_title='TVD, ft',
         aspectmode='manual'),
         title=title,
-        height=2000)
+        height=800)
     
     fig.update_scenes(zaxis_autorange="reversed")
 
