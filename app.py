@@ -32,18 +32,27 @@ def load_data(data):
             trajectory.append(new_point)
     return pd.DataFrame(trajectory[1:])  # Skip the initial dummy point
 
+# def calc_dogleg(inc1, inc2, azi1, azi2):
+#     if inc1 == inc2 and azi1 == azi2:
+#         dls = 0
+#     else:
+#         inner_value = cos(radians(inc1)) * cos(radians(inc2)) + sin(radians(inc1)) * sin(radians(inc2)) * \
+#             cos(radians(azi2 - azi1))
+#         if inner_value > 1:
+#             inner_value = 1
+#         if inner_value < -1:
+#             inner_value = -1
+#         dls = acos(inner_value)
+#     return dls
+
 def calc_dogleg(inc1, inc2, azi1, azi2):
-    if inc1 == inc2 and azi1 == azi2:
-        dls = 0
-    else:
-        inner_value = cos(radians(inc1)) * cos(radians(inc2)) + sin(radians(inc1)) * sin(radians(inc2)) * \
-            cos(radians(azi2 - azi1))
-        if inner_value > 1:
-            inner_value = 1
-        if inner_value < -1:
-            inner_value = -1
-        dls = acos(inner_value)
-    return dls
+    # Calculate beta using the equation from the image with radians conversion applied directly
+    cos_value = cos(radians(inc2) - radians(inc1)) - sin(radians(inc1)) * sin(radians(inc2)) * (1 - cos(radians(azi2) - radians(azi1)))
+    # Clamp the cos_value to avoid math domain errors if the value is outside the range [-1, 1]
+    cos_value = max(min(cos_value, 1), -1)
+    
+    beta = acos(cos_value)
+    return beta  # beta is returned in radians
 
 def calc_north(north_prev, md1, md2, inc1, inc2, azi1, azi2, dogleg):
     rf = calc_rf(dogleg)
@@ -65,8 +74,16 @@ def calc_tvd(tvd_prev, md1, md2, inc1, inc2, dogleg):
     tvd_delta = 0.5 * delta_md * (cos(radians(inc1)) + cos(radians(inc2))) * rf
     return tvd_prev + tvd_delta
 
-def calc_rf(dogleg):
-    return 1 if dogleg == 0 else tan(dogleg / 2) / (dogleg / 2)
+# def calc_rf(dogleg):
+#     return 1 if dogleg == 0 else tan(dogleg / 2) / (dogleg / 2)
+
+def calc_rf(beta):
+    # Avoid division by zero in case beta is zero
+    if beta == 0:
+        return 1
+    else:
+        # Calculate RF using the beta value
+        return (2 / beta) * tan(beta / 2)
 
 def plot_data(df, highlight_dls):
     if highlight_dls:
