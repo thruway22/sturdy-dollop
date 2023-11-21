@@ -95,7 +95,7 @@ def plot_data(df, highlight_dl=False):
                 z=df['tvd'],
                 mode='markers',
                 marker=dict(
-                    size=2,
+                    size=5,
                     color=df['dl'],  # Color by dogleg severity
                     colorscale='matter',
                     showscale=True,
@@ -124,7 +124,7 @@ def plot_data(df, highlight_dl=False):
     return fig
 
 st.title('Well Profile')
-st.write(21)
+st.write(22)
 
 raw_data = st.text_area(
     'data', placeholder='Paste date here', label_visibility='collapsed')
