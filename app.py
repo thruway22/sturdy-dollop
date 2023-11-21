@@ -6,6 +6,8 @@ import plotly.graph_objects as go
 
 st.set_page_config(page_title='DLS Plotter')
 
+st.write(12)
+
 def prep_data(string):
     values = string.split()
     grouped_values = [values[i:i + 3] for i in range(0, len(values), 3)]
