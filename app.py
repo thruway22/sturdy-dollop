@@ -23,8 +23,6 @@ def plot(well):
     color = 'well'
     fig = px.line_3d(result, x="east", y="north", z="tvd", color=color)
 
-
-
 def convert_to_csv(input_string):
     values = input_string.split()
     # Group every three values
@@ -33,11 +31,9 @@ def convert_to_csv(input_string):
     return df
 
 df = convert_to_csv(data)
-
 st.write(df)
 
 wp = wp.load(df)
-
 st.plotly_chart(wp.load(df).plot())
 
 # wp.plot(style={'color': 'dls', 'size': 5}).show()
