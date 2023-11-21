@@ -93,7 +93,6 @@ def plot_data(df, points=True):
         yaxis_title='North, ft',
         zaxis_title='TVD, ft',
         aspectmode='manual'),
-        title=title,
         height=750)
     
     fig.update_scenes(zaxis_autorange='reversed')
