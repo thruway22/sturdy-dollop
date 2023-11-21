@@ -8,7 +8,7 @@ st.title('test2')
 data = st.text_area('data')
 
 
-df = utl.prep_df(create_df(data))
+df = utl.prep_df(utl.create_df(data))
 st.write(df)
 
 
