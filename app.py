@@ -5,7 +5,6 @@ import plotly.express as px
 import plotly.graph_objects as go
 
 st.set_page_config(page_title='DLS Plotter')
-
 st.write(12)
 
 def prep_data(string):
@@ -21,78 +20,57 @@ def load_data(data):
     trajectory = [{'md': 0, 'inc': 0, 'azi': 0, 'dls': 0, 'tvd': 0, 'north': 0, 'east': 0}]
     for idx, row in data.iterrows():
         if row['md'] > 0:
-            dogleg = calc_dogleg(trajectory[-1]['inc'], row['inc'], trajectory[-1]['azi'], row['azi'])
+            beta = compute_beta(trajectory[-1]['inc'], row['inc'], trajectory[-1]['azi'], row['azi'])
             new_point = {
                 'md': row['md'], 
                 'inc': row['inc'], 
                 'azi': row['azi'],
-                'north': calc_north(trajectory[-1]['north'], trajectory[-1]['md'], row['md'], trajectory[-1]['inc'], row['inc'], trajectory[-1]['azi'], row['azi'], dogleg),
-                'east': calc_east(trajectory[-1]['east'], trajectory[-1]['md'], row['md'], trajectory[-1]['inc'], row['inc'], trajectory[-1]['azi'], row['azi'], dogleg),
-                'tvd': calc_tvd(trajectory[-1]['tvd'], trajectory[-1]['md'], row['md'], trajectory[-1]['inc'], row['inc'], dogleg),
-                'dls': degrees(dogleg)
+                'north': compute_north(trajectory[-1]['north'], trajectory[-1]['md'], row['md'], trajectory[-1]['inc'], row['inc'], trajectory[-1]['azi'], row['azi'], beta),
+                'east': compute_east(trajectory[-1]['east'], trajectory[-1]['md'], row['md'], trajectory[-1]['inc'], row['inc'], trajectory[-1]['azi'], row['azi'], beta),
+                'tvd': compute_tvd(trajectory[-1]['tvd'], trajectory[-1]['md'], row['md'], trajectory[-1]['inc'], row['inc'], beta),
+                'dls': degrees(beta)
             }
             trajectory.append(new_point)
-    return pd.DataFrame(trajectory[1:])  # Skip the initial dummy point
+    return pd.DataFrame(trajectory[1:])
 
-# def calc_dogleg(inc1, inc2, azi1, azi2):
-#     if inc1 == inc2 and azi1 == azi2:
-#         dls = 0
-#     else:
-#         inner_value = cos(radians(inc1)) * cos(radians(inc2)) + sin(radians(inc1)) * sin(radians(inc2)) * \
-#             cos(radians(azi2 - azi1))
-#         if inner_value > 1:
-#             inner_value = 1
-#         if inner_value < -1:
-#             inner_value = -1
-#         dls = acos(inner_value)
-#     return dls
-
-def calc_dogleg(inc1, inc2, azi1, azi2):
-    # Calculate beta using the equation from the image with radians conversion applied directly
+def compute_beta(inc1, inc2, azi1, azi2):
     cos_value = cos(radians(inc2) - radians(inc1)) - sin(radians(inc1)) * sin(radians(inc2)) * (1 - cos(radians(azi2) - radians(azi1)))
-    # Clamp the cos_value to avoid math domain errors if the value is outside the range [-1, 1]
     cos_value = max(min(cos_value, 1), -1)
-    
     beta = acos(cos_value)
-    return beta  # beta is returned in radians
+    return beta
 
-def calc_north(north_prev, md1, md2, inc1, inc2, azi1, azi2, dogleg):
-    rf = calc_rf(dogleg)
+def compute_north(north_prev, md1, md2, inc1, inc2, azi1, azi2, beta):
+    rf = compute_rf(beta)
     delta_md = md2 - md1
     north_delta = 0.5 * delta_md * (sin(radians(inc1)) * cos(radians(azi1)) +
                                     sin(radians(inc2)) * cos(radians(azi2))) * rf
     return north_prev + north_delta
 
-def calc_east(east_prev, md1, md2, inc1, inc2, azi1, azi2, dogleg):
-    rf = calc_rf(dogleg)
+def compute_east(east_prev, md1, md2, inc1, inc2, azi1, azi2, beta):
+    rf = compute_rf(beta)
     delta_md = md2 - md1
     east_delta = 0.5 * delta_md * (sin(radians(inc1)) * sin(radians(azi1)) +
                                    sin(radians(inc2)) * sin(radians(azi2))) * rf
     return east_prev + east_delta
 
-def calc_tvd(tvd_prev, md1, md2, inc1, inc2, dogleg):
-    rf = calc_rf(dogleg)
+def compute_tvd(tvd_prev, md1, md2, inc1, inc2, beta):
+    rf = compute_rf(beta)
     delta_md = md2 - md1
     tvd_delta = 0.5 * delta_md * (cos(radians(inc1)) + cos(radians(inc2))) * rf
     return tvd_prev + tvd_delta
 
-# def calc_rf(dogleg):
-#     return 1 if dogleg == 0 else tan(dogleg / 2) / (dogleg / 2)
-
-def calc_rf(beta):
-    # Avoid division by zero in case beta is zero
+def compute_rf(beta):
     if beta == 0:
         return 1
     else:
-        # Calculate RF using the beta value
         return (2 / beta) * tan(beta / 2)
 
 def plot_data(df, highlight_dls):
     if highlight_dls:
         custom_colorscale = [
-        [0.0, 'rgba(220,218,218,255)'],
-        [0.5, 'rgba(245,181,136,255)'],
-        [1.0, 'rgba(179,13,29,255)']
+            [0.0, 'rgba(220,218,218,255)'],
+            [0.5, 'rgba(245,181,136,255)'],
+            [1.0, 'rgba(179,13,29,255)']
         ]
 
         fig = go.Figure(
