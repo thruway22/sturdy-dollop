@@ -69,7 +69,7 @@ def calc_rf(dogleg):
 def plot_data(df, highlight_dls):
     if highlight_dls:
         custom_colorscale = [
-        [0.0, 'rgb(188,33,40)']
+        [0.0, 'rgb(188,33,40)'],
         [0.5, 'rgb(243,164,112)'],  # light red
         [1.0, 'rgb(177,177,177)']       # red
         ]
