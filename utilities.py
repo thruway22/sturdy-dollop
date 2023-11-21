@@ -10,7 +10,7 @@ def create_df(string):
     df = pd.DataFrame(grouped_values, columns=['md', 'inc', 'azi'])
     return df
 
-def process_df(df):
+def prep_df(df):
     df.dropna(axis=1, how='all', inplace=True)
     df.dropna(inplace=True)
     return df
