@@ -66,7 +66,7 @@ def calc_tvd(tvd_prev, md1, md2, inc1, inc2, dogleg):
 def calc_rf(dogleg):
     return 1 if dogleg == 0 else tan(dogleg / 2) / (dogleg / 2)
 
-def plot_data(df, points=True):
+def plot_data(df, points):
     if points:
         fig = go.Figure(
             data=[go.Scatter3d(
