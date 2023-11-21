@@ -28,7 +28,8 @@ def load_data(data):
                 'north': compute_north(trajectory[-1]['north'], trajectory[-1]['md'], row['md'], trajectory[-1]['inc'], row['inc'], trajectory[-1]['azi'], row['azi'], beta),
                 'east': compute_east(trajectory[-1]['east'], trajectory[-1]['md'], row['md'], trajectory[-1]['inc'], row['inc'], trajectory[-1]['azi'], row['azi'], beta),
                 'tvd': compute_tvd(trajectory[-1]['tvd'], trajectory[-1]['md'], row['md'], trajectory[-1]['inc'], row['inc'], beta),
-                'dls': degrees(beta)
+                # 'dls': degrees(beta)
+                'dls': (degrees(beta)/row['md']) * 100
             }
             trajectory.append(new_point)
     return pd.DataFrame(trajectory[1:])
