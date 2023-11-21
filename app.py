@@ -11,10 +11,11 @@ def prep_data(string):
     values = string.split()
     grouped_values = [values[i:i + 3] for i in range(0, len(values), 3)]
     df = pd.DataFrame(grouped_values, columns=['md', 'inc', 'azi'])
-    df[['md', 'inc', 'azi']] = df[['md', 'inc', 'azi']].apply(pd.to_numeric)
+    df[['md', 'inc', 'azi']] = df[['md', 'inc', 'azi']].apply(pd.to_numeric, errors='coerce')
     df.dropna(axis=1, how='all', inplace=True)
     df.dropna(inplace=True)
     return df
+
 
 def load_data(data):
     trajectory = [{'md': 0, 'inc': 0, 'azi': 0, 'dl': 0, 'tvd': 0, 'north': 0, 'east': 0}]
