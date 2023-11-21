@@ -80,10 +80,14 @@ def plot_data(df, highlight_dls):
                     colorscale='matter',
                     showscale=True,
                     opacity=1.0),
-                hovertemplate='<b>North</b>: %{y:.2f}<br>' +
-                              '<b>East</b>: %{x}<br>' +
-                              '<b>TVD</b>: %{z}<br>' +
-                              '<b>DLS</b>: %{marker.color:.2f}<extra></extra>')
+                hovertemplate='<b>MD</b>: %{customdata[0]:.2f}<br>' +
+                              '<b>Inc</b>: %{customdata[1]:.2f}<br>' +
+                              '<b>Azi</b>: %{customdata[2]:.2f}<br>' +
+                              '<b>North</b>: %{y:.2f}<br>' +
+                              '<b>East</b>: %{x:.2f}<br>' +
+                              '<b>TVD</b>: %{z:.2f}<br>' +
+                              '<b>DLS</b>: %{marker.color:.2f}<extra></extra>',
+                customdata=df[['md', 'inc', 'azi']])
             ])
     else:
         fig = px.line_3d(df, x='east', y='north', z='tvd', color_discrete_sequence=['blue'])
