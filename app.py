@@ -128,6 +128,8 @@ def plot_wellpath(df, highlight_dl=False):
         fig = px.line_3d(df, x="east", y="north", z="tvd", color_discrete_sequence=['blue'])
         title = 'Wellbore Trajectory - 3D View'
 
+    
+
     fig.update_layout(scene=dict(
         xaxis_title='East, m',
         yaxis_title='North, m',
@@ -136,13 +138,12 @@ def plot_wellpath(df, highlight_dl=False):
         title=title)
     
     fig.update_scenes(zaxis_autorange="reversed")
-    fig.layout.template = style['darkMode']
 
     return fig
 
 
 st.title('test')
-st.write(10)
+st.write(11)
 
 raw_data = st.text_area('data')
 
