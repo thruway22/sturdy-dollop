@@ -23,5 +23,4 @@ st.write(df)
 
 wp = wp.load(df)
 
-
-# wp.plot(style={'color': 'dls', 'size': 5}).show()
+wp.plot(style={'color': 'dls', 'size': 5}).show()
