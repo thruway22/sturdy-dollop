@@ -97,7 +97,7 @@ st.title('Dogleg Severity Plotter')
 raw_data = st.text_area(
     'data', placeholder='Paste date here', label_visibility='collapsed')
 
-st.toggle('Plot simple well profile')
+st.toggle('Plot Simple Well Profile')
 
 if raw_data:
     df = prep_data(raw_data)
